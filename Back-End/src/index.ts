@@ -1,9 +1,14 @@
+import {config} from "dotenv" //for typescript compliance
+config()
+
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 
 import Deck from "./models/Deck";
 
 const app = express();
+
+// npm dotenv
 
 
 const PORT=5000;
@@ -48,7 +53,7 @@ app.post("/decks", async(req: Request, res: Response) => {
 // this is a promise
 // so its some asynch code
 mongoose.connect(
-  "mongodb+srv://flahcard-mern:hs2232000@cluster0.hah9p8r.mongodb.net/?retryWrites=true&w=majority"
+  process.env.MONGO_URL ?? ""   //for typescript err
 ).then(()=>{
     console.log(`listening to post ${PORT}`);
     
