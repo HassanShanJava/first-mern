@@ -1,10 +1,13 @@
 import {config} from "dotenv" //for typescript compliance
 config()
 
-import express, { Request, Response } from "express";
+import express, { application, Request, Response } from "express";
 import mongoose from "mongoose";
 
 import Deck from "./models/Deck";
+
+
+import cors from "cors"
 
 const app = express();
 
@@ -24,6 +27,10 @@ const PORT=5000;
 //   res.send("Hello world");
 // });
 
+
+app.use(cors({
+  origin:"*",  //anyone can access
+}))
 app.use(express.json()) //express middleware function for support
 
 
