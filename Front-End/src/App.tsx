@@ -3,6 +3,11 @@ import React,{useState, useEffect} from "react";
 import "./App.css"
 
 
+type TDeck={
+  title:string,
+  _id:string
+}
+
 
 const App: React.FC=()=> {
   const [title, setTitle]=useState('')
@@ -10,7 +15,7 @@ const App: React.FC=()=> {
   // const [title, setTitle]=useState('')[0]for the setValue ===> title
   // const [title, setTitle]=useState('')[1]for the dispacther ===> setTitle
 
-  const [decks, setDecks]=useState<any>([])
+  const [decks, setDecks]=useState<TDeck[]>([])
   
   // when the app.tsx mounts(loads) we want to trigger an api request
   useEffect(()=>{
@@ -67,8 +72,8 @@ const App: React.FC=()=> {
 
       <ul className="decks">
         {
-          decks.map((deck:any)=>(
-            <li >{deck.title}</li>
+          decks.map((deck:TDeck)=>( //becarful here, need to create "type TDeck" so we can use .title &._id
+            <li key={deck._id}>{deck.title}</li>
           ))
         }
       </ul>
