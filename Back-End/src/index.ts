@@ -8,6 +8,8 @@ import Deck from "./models/Deck";
 
 
 import cors from "cors"
+import { getDeckController } from "./controllers/getDeckController";
+import { deleteDeckController } from "./controllers/deleteDeckController";
 
 const app = express();
 
@@ -43,35 +45,10 @@ app.use(express.json()) //express middleware function for support
 
 // when fetch data-->get requeust
 // when push data-->post requeust
-app.get("/decks", async(req: Request, res: Response)=>{
-
-  // to fetch all decks & send  to user
-  // 1. detahdata from mongo
-  const deck= await Deck.find() //you can also add reex and be more specific here 
-  console.log(deck); //change thunderbt to get method, it crashes but youu can see the console log
-  
-  // 2. send data to user in array
-  res.json(deck) //now fiure out, how to fetch it from the front end
-}
-)
+app.get("/decks", getDeckController)
 
 // use post to createbrand new resoucre
-app.post("/decks", async(req: Request, res: Response) => {
-  // res.set
-  // res.send("Hello world");
-  
-  // we create new model and add it to db
-  console.log(req.body);
-  
-
-  const newDeck=new   Deck({
-    title:req.body.title
-  }) //oop
-
-  // now its saved in db
-  const createdDeck= await  newDeck.save() //we get uniqe id in mongo collection
-  res.json(createdDeck)
-});
+app.post("/decks", );
 
 // 1st api
 // app.get("/", (req: Request, res: Response) => {
@@ -80,24 +57,7 @@ app.post("/decks", async(req: Request, res: Response) => {
 
 
 // delete endpoint
-app.delete("/decks/:deckId",async (req:Request, res:Response)=>{  //someone can put dynamicvalue in url
-  // Todo:
-  //1.get deck id  fromurl to delete
-  const Deckid=req.params.deckId //if u wna get anything froo url use params
-  
-    //2.delete deck frfom mongoo
-  const deck=await Deck.findByIdAndDelete(Deckid)
-
-  // res.json({
-  //   message:"sucess delete"
-  // })
-  
-  //3.return whatu deleteed to user who made request
-  res.json(deck) //return what u delete
-
-
-
-})
+app.delete("/decks/:deckId", deleteDeckController)
 
 
 
