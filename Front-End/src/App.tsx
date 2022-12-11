@@ -1,45 +1,32 @@
+import { create } from "domain";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { createDeck } from "./api/createDeck";
+import { deleteDeck } from "./api/deleteDeck";
+import { getDeck, TDeck } from "./api/getDeck";
 import "./App.css";
 
-type TDeck = {
-  title: string;
-  _id: string;
-};
 
 const App: React.FC = () => {
   const [title, setTitle] = useState("");
-
   // const [title, setTitle]=useState('')[0]for the setValue ===> title
   // const [title, setTitle]=useState('')[1]for the dispacther ===> setTitle
-
   const [decks, setDecks] = useState<TDeck[]>([]);
 
   async function handleDelete(deckId:string) {
     // request backend to delte
-    await fetch(`http://localhost:5000/decks/${deckId}`,{
-      method:"DELETE",
-      // body:JSON.stringify({
-      //   title,
-      // }),
-      // headers:{
-      //   "Content-Type":"application/json"
-      // }
-
-    })
-
+    await deleteDeck(deckId)
     //refetch all todos so it loads again
     // OR
     //OPTIMISTIC UPDATE---->do sthing with setDecks
     setDecks(decks.filter((deck)=>deck._id!==deckId))
-
   }
 
   // when the app.tsx mounts(loads) we want to trigger an api request
   useEffect(() => {//runs on load
     async function fetchData() {
-      const response = await fetch("http://localhost:5000/decks");
-      const newDecks = await response.json();
+      // const response = await fetch("http://localhost:5000/decks");
+      const newDecks = await getDeck()
       // setDecks([...decks, newDecks])
       setDecks(newDecks);
     }
@@ -63,16 +50,7 @@ const App: React.FC = () => {
   const handlerCreateDeck = async (e: React.FormEvent) => {
     e.preventDefault();
     // we need to talk too backend api to preset this deck
-    const res=await fetch("http://localhost:5000/decks", {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const deck=await res.json()
+    const deck=await createDeck(title)
     setDecks([...decks,deck])
     setTitle("");
   };
