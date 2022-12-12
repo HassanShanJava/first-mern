@@ -10,6 +10,8 @@ import mongoose from "mongoose";
 import cors from "cors"
 import { getDeckController } from "./controllers/getDeckController";
 import { deleteDeckController } from "./controllers/deleteDeckController";
+import { createCardForDeckController } from "./controllers/createCardForDeckController";
+import { createDeckController } from "./controllers/createDeckController";
 
 const app = express();
 
@@ -48,7 +50,7 @@ app.use(express.json()) //express middleware function for support
 app.get("/decks", getDeckController)
 
 // use post to createbrand new resoucre
-app.post("/decks", );
+app.post("/decks", createDeckController);
 
 // 1st api
 // app.get("/", (req: Request, res: Response) => {
@@ -58,6 +60,11 @@ app.post("/decks", );
 
 // delete endpoint
 app.delete("/decks/:deckId", deleteDeckController)
+
+
+
+// fofr cards of each deck
+app.post("/decks/:deckId/cards", createCardForDeckController)
 
 
 
