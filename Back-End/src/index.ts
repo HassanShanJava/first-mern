@@ -1,10 +1,10 @@
 import {config} from "dotenv" //for typescript compliance
 config()
 
-import express, { application, Request, Response } from "express";
+import express from "express";
 import mongoose from "mongoose";
 
-import Deck from "./models/Deck";
+// import Deck from "./models/Deck";
 
 
 import cors from "cors"
