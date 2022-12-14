@@ -10,7 +10,7 @@ import "./App.css";
 const App: React.FC = () => {
   const [title, setTitle] = useState("");
   // const [title, setTitle]=useState('')[0]for the setValue ===> title
-  const [title, setTitle]=useState('')[1]for the dispacther ===> setTitle
+  // const [title, setTitle]=useState('')[1]for the dispacther ===> setTitle
   const [decks, setDecks] = useState<TDeck[]>([]);
 
   async function handleDelete(deckId:string) {
